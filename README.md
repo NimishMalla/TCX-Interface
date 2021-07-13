@@ -8,7 +8,8 @@ The code is hosted partially local and on the cloud - TCXAction.py is the AWS La
 Lambda
 - 
 1. Receives event consisting of instructions from RESTful API Query Parameters
-2. 
+2. Verifies whether instruction exists and sends either a success or failure validation message
+3. Calls action handler to crea
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYxNzQzNjM4Ml19
+eyJoaXN0b3J5IjpbLTEwNTA2NDA2MTJdfQ==
 -->
