@@ -18,7 +18,8 @@ Main Script
 6. Ran with argument flags and corresponding input to provide certification
 7. Sets up GPIO outputs to default HIGH signal
 8. Parses arguments to collect important information
-9. 
+9. Sets logging level (local verbosity) based on argument
+10. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgzNTkyNDU2MV19
+eyJoaXN0b3J5IjpbMzUyMTczMTY0XX0=
 -->
