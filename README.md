@@ -7,7 +7,8 @@ The code is hosted partially local and on the cloud - TCXAction.py is the AWS La
 
 Lambda
 - 
-
+1. Creates an MQTT connection instance
+2. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc0ODQ4NjcxXX0=
+eyJoaXN0b3J5IjpbLTk5MDU1NDkwN119
 -->
