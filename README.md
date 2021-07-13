@@ -20,7 +20,8 @@ Main Script
 8. Parses arguments to collect important information
 9. Sets logging level (local verbosity) based on argument
 10. Define callback functions to act on various triggers (connection, interruptions, etc.)
-11. Define  
+11. Define callback functions for various actions (bluetooth button, filter pump button, etc.)
+12. Define local action handler to 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ1NzMwMzAyN119
+eyJoaXN0b3J5IjpbLTE1MzI4MTIzOTVdfQ==
 -->
