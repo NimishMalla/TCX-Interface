@@ -19,7 +19,8 @@ Main Script
 7. Sets up GPIO outputs to default HIGH signal
 8. Parses arguments to collect important information
 9. Sets logging level (local verbosity) based on argument
-10. 
+10. Define callback functions to act on various triggers (connection, interruptions, etc.)
+11. Define  
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzUyMTczMTY0XX0=
+eyJoaXN0b3J5IjpbLTQ1NzMwMzAyN119
 -->
