@@ -11,7 +11,13 @@ Lambda
 2. Receives event consisting of instructions from RESTful API Query Parameters
 3. Verifies whether instruction exists and sends either a success or failure validation message
 4. Calls action handler to publish a payload to the topic, 'TCXAction', with target action
-5. Returns a successful 
+5. Returns a successful status code regardless in order to allow error-handling on the Pi as well
+
+Main Script
+-
+
+7. Sets up GPIO outputs to default HIGH signal
+8. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMjgxODYwNjJdfQ==
+eyJoaXN0b3J5IjpbLTE5NTM3MDQwNTBdfQ==
 -->
