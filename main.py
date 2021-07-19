@@ -124,6 +124,7 @@ def setAllHigh():
 
 # Performs a two-finger salute to reset the TCX and get ready for re-provisioning
 def doSalute():
+    time.sleep(1)
     GPIO.output(26, GPIO.LOW)       # switch to wired
     logging.debug('switch relay 4 to wired')
     time.sleep(3)                   # wait for switch
@@ -131,10 +132,10 @@ def doSalute():
     logging.debug('press relay 2')
     GPIO.output(19, GPIO.LOW)       # press switch mode
     logging.debug('press relay 3')
-    time.sleep(5)                   # hold buttons down
+    time.sleep(3)                   # hold buttons down
     GPIO.output(26, GPIO.HIGH)      # switch to wifi
     logging.debug('switch relay 4 to wifi')
-    time.sleep(5)                   # wait for reset
+    time.sleep(2)                   # wait for reset
     GPIO.output(13, GPIO.HIGH)      # release filter pump
     logging.debug('release relay 2')
     GPIO.output(19, GPIO.HIGH)      # release switch mode
@@ -306,3 +307,4 @@ if __name__ == '__main__':
     disconnect_future = mqtt_connection.disconnect()
     disconnect_future.result()
     print("Disconnected!")
+
