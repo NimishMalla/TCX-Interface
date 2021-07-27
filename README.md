@@ -10,7 +10,7 @@ Lambda
 1. Creates a MQTT connection client
 2. Receives event consisting of instructions from RESTful API Query Parameters
 3. Verifies whether instruction exists and sends either a success or failure validation message
-4. Calls action handler to publish a payload to the topic, 'TCXAction', with target action
+4. Calls action/temperature handler to publish a payload to the corresponding topic with target action
 5. Returns a successful status code regardless in order to allow error-handling on the Pi as well
 
 Main Script
@@ -19,9 +19,9 @@ Main Script
 2. Sets up GPIO outputs to default HIGH signal
 3. Parses arguments to collect important information
 4. Sets logging level (local verbosity) based on argument
-5. Define callback functions to act on various triggers (connection, interruptions, etc.)
-6. Define callback functions for various actions (bluetooth button, filter pump button, etc.)
-7. Define local action handler to process payload received from Lambda through MQTT.
+5. Callback functions to act on various triggers (connection, interruptions, etc.)
+6. Callback functions for various actions (bluetooth button, temperature, etc.)
+7. Local handler to process payload received from Lambda through MQTT.
 8. Action callback with success logging *or* failure logging
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbLTQyMTk4Mzk5Ml19
