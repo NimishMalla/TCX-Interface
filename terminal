@@ -1,1 +1,1 @@
-python3 ~/Nimish/main.py --topic TCXAction --root-ca ~/certs/AmazonRootCA1.pem --cert ~/certs/certificate.pem.crt --key ~/certs/private.pem.key --endpoint a2hecv81ph4doq-ats.iot.us-east-1.amazonaws.com
+python3 ~/Desktop/temptest/main.py --topic TCXAction --topic2 TCXTemp --root-ca ~/certs/AmazonRootCA1.pem --cert ~/certs/certificate.pem.crt --key ~/certs/private.pem.key --endpoint a2hecv81ph4doq-ats.iot.us-east-1.amazonaws.com
