@@ -265,7 +265,11 @@ def on_temp_received(topic, payload, dup, qos, retain, **kwargs):
     data = json.loads(payload)
     
     logging.info("Received message from topic '{}': {}".format(topic, payload.decode("utf-8")))
-    changeTemperature(data["sensor"], int(data["val"]))
+    
+    if data["sensor"] == 'fail':
+        logging.info('ERROR: Incorrect format for requesting temperature')
+    else:
+        changeTemperature(data["sensor"], int(data["val"]))
 
     global received_count
     received_count += 1
