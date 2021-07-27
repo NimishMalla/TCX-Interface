@@ -3,6 +3,8 @@ import boto3
 
 client = boto3.client('iot-data', region_name='us-east-1')
 
+
+
 def doAction(action):
     # Set topic, qos, payload
     client.publish(
@@ -10,21 +12,53 @@ def doAction(action):
         qos = 1,
         payload = json.dumps({ "action": action })
     )
+    
+def doTempAction(sensor, val):
+    client.publish(
+        topic = 'TCXTemp',
+        qos = 1,
+        payload = json.dumps({"action": "temperature", "sensor": sensor, "val": val})
+    )
+
+    
+def failure(type, action):
+    if type == 'ne':
+        return {'statusCode': 200,'body': json.dumps(f"ERROR: Non-existing Command: {action}")}
+    else:
+        return {'statusCode': 200,'body': json.dumps("ERROR: Incorrect Format")}
+    
+def existing(action, cl):
+    if action == 'quit':
+        doAction(action)
+        return {'statusCode': 200,'body': json.dumps("Sent command: Quitting program")}
+    elif action == 'temperature':
+        if len(cl) == 3 and list(cl.keys())[1] == 'sensor' and list(cl.keys())[2] == 'val':
+            sensor, val = cl['sensor'], cl['val']
+            print(sensor, val)
+            if type(sensor) != str or val.isdigit() == False:
+                doTempAction(sensor, int(val))
+                return failure('f', 'format: wrong types for temperature')
+            doTempAction(sensor, val)
+            return {'statusCode': 200,'body': json.dumps(f"Sent command: Change temperature of {sensor} to {val}")}
+        else:
+            doTempAction(sensor, val)
+            return failure('f', 'format: not enough args for temperature')
+    else:
+        doAction(action)
+        return {'statusCode': 200,'body': json.dumps(f"Sent command: {action}")}
 
 def lambda_handler(event, context):
-    action = event['queryStringParameters']['action']
+    options = ['salute', 'provision', 'filterpump', 'switchmode', 'switchwifi', 'switchwired', 'quit', 'temperature']
+    commandList = event['queryStringParameters']
+    if len(commandList) == 0 or len(commandList) >= 4:
+        return failure('f', 'format: no arg or too many args')
     
-    options = ['salute', 'provision', 'filterpump', 'switchmode', 'switchwifi', 'switchwired', 'quit']
-    body = f"Sent command: {action}"
+    if list(commandList.keys())[0] != 'action':
+        return failure('f', 'format: no action arg')
+    
+    action = commandList['action']
     if action not in options:
-        body = f"ERROR: Non-existing Command: {action}"
         doAction(action)
+        return failure('ne', action)
     else:
-        if action == 'quit':
-            body = 'Sent command: Quitting program'
-        doAction(action)
-    
-    return {
-        'statusCode': 200,
-        'body': json.dumps(body)
-    }
+        return existing(action, commandList)
