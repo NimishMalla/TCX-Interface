@@ -34,10 +34,10 @@ def existing(action, cl):
     elif action == 'temperature':
         if len(cl) == 3 and list(cl.keys())[1] == 'sensor' and list(cl.keys())[2] == 'val':
             sensor, val = cl['sensor'], cl['val']
-            print(sensor, val)
             if type(sensor) != str or val.isdigit() == False:
-                doTempAction(sensor, int(val))
+                doTempAction('fail', val)
                 return failure('f', 'format: wrong types for temperature')
+            val = round(int(val)/10)*10
             doTempAction(sensor, val)
             return {'statusCode': 200,'body': json.dumps(f"Sent command: Change temperature of {sensor} to {val}")}
         else:
