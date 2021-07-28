@@ -24,9 +24,9 @@ Main Script
 12. Local handler to process payload received from Lambda through MQTT.
 13. Action callback with success logging *or* failure logging
 
- Main Script
+ Available Commands
  -
- 
+ - 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkzODkxNzQyNSwtNDIxOTgzOTkyXX0=
+eyJoaXN0b3J5IjpbNTgwNDE3NjA1LC00MjE5ODM5OTJdfQ==
 -->
