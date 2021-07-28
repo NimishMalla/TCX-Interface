@@ -26,7 +26,14 @@ Main Script
 
  Available Commands
  -
+ - 'salute': two-finger salute to re-provision
+ - 'provision': presses Bluetooth to Phone button
+ - 'filterpump': presses Filter Pump button
+ - 'switchmode': cycles through modes once
+ - 'switchwifi': switches TCX to wifi mode
+ - 'switchwired': switches TCX to wired mode
+ - 'temperature', 'sensor', 'val'
  - 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTgwNDE3NjA1LC00MjE5ODM5OTJdfQ==
+eyJoaXN0b3J5IjpbLTE1MzQ5ODY2NjEsLTQyMTk4Mzk5Ml19
 -->
