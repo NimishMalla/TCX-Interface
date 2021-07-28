@@ -32,8 +32,8 @@ Main Script
  - 'switchmode': cycles through modes once
  - 'switchwifi': switches TCX to wifi mode
  - 'switchwired': switches TCX to wired mode
- - 'temperature', 'sensor', 'val'
- - 
+ - 'temperature', sensor (string), val (int): sends temperature values according using parameters of sensor and val
+ - 'quit': ends running program on local machine
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MzQ5ODY2NjEsLTQyMTk4Mzk5Ml19
+eyJoaXN0b3J5IjpbLTIwNDEwMjA5NzYsLTQyMTk4Mzk5Ml19
 -->
