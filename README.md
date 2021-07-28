@@ -15,14 +15,18 @@ Lambda
 
 Main Script
 -
-1. Ran with argument flags and corresponding input to provide certification
-2. Sets up GPIO outputs to default HIGH signal
-3. Parses arguments to collect important information
-4. Sets logging level (local verbosity) based on argument
-5. Callback functions to act on various triggers (connection, interruptions, etc.)
-6. Callback functions for various actions (bluetooth button, temperature, etc.)
-7. Local handler to process payload received from Lambda through MQTT.
-8. Action callback with success logging *or* failure logging
+6. Ran with argument flags and corresponding input to provide certification
+7. Sets up GPIO outputs to default HIGH signal
+8. Parses arguments to collect important information
+9. Sets logging level (local verbosity) based on argument
+10. Callback functions to act on various triggers (connection, interruptions, etc.)
+11. Callback functions for various actions (bluetooth button, temperature, etc.)
+12. Local handler to process payload received from Lambda through MQTT.
+13. Action callback with success logging *or* failure logging
+
+ Main Script
+ -
+ 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQyMTk4Mzk5Ml19
+eyJoaXN0b3J5IjpbLTkzODkxNzQyNSwtNDIxOTgzOTkyXX0=
 -->
