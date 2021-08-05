@@ -16,7 +16,7 @@ import time
 import asyncio
 from uuid import uuid4
 import logging
-import boto3
+#import boto3
 import smbus
 
 
@@ -24,22 +24,27 @@ import smbus
 # Setup GPIO defaults
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(22, GPIO.OUT, initial=GPIO.HIGH) #1
+GPIO.setup(6, GPIO.OUT, initial=GPIO.HIGH) #1
+PROV = 6
 GPIO.setup(13, GPIO.OUT, initial=GPIO.HIGH) #2
+FPUMP = 13
 GPIO.setup(19, GPIO.OUT, initial=GPIO.HIGH) #3
+SMODE = 19
 GPIO.setup(26, GPIO.OUT, initial=GPIO.HIGH) #4
-GPIO.setup(12, GPIO.OUT, initial=GPIO.HIGH) #5
-GPIO.setup(16, GPIO.OUT, initial=GPIO.HIGH) #6
-GPIO.setup(20, GPIO.OUT, initial=GPIO.HIGH) #7
-GPIO.setup(21, GPIO.OUT, initial=GPIO.HIGH) #8
+SCONN = 26
+
+# Setup I2C bus for digital potentiometer
+bus = smbus.SMBus(1)
+bus.write_i2c_block_data(0x2c, 0x00, [0x32])
+time.sleep(0.5)
+bus.write_i2c_block_data(0x2c, 0x01, [0x32])
+time.sleep(0.5)
+bus.write_i2c_block_data(0x2c, 0x02, [0x32])
+time.sleep(1)
 
 
-# This sample uses the Message Broker for AWS IoT to send and receive messages
-# through an MQTT connection. On startup, the device connects to the server,
-# subscribes to a topic, and begins publishing messages to that topic.
-# The device should receive those same messages back from the message broker,
-# since it is subscribed to that same topic.
 
+# Collect run parameters from command line call.
 parser = argparse.ArgumentParser(
     description="Send and receive messages through and MQTT connection.")
 parser.add_argument('--debug', default=2, help=                                     "Level of feedback desired.")
@@ -66,9 +71,6 @@ parser.add_argument('--verbosity', choices=[x.name for x in io.LogLevel], defaul
 
 # Parse run parameters from terminal launch
 args = parser.parse_args()
-
-# Setup I2C bus for digital potentiometer
-bus = smbus.SMBus(1)
 
 # Declare temperature conversions
 temps = {
@@ -143,66 +145,66 @@ def on_resubscribe_complete(resubscribe_future):
 def doSalute():
     '''Send sequence to 2-finger-salute'''
     time.sleep(1)
-    GPIO.output(26, GPIO.LOW)       # switch to wired
+    GPIO.output(SCONN, GPIO.LOW)       # switch to wired
     logging.debug('switch relay 4 to wired')
     time.sleep(3)                   # wait for switch
-    GPIO.output(13, GPIO.LOW)       # press filter pump
+    GPIO.output(FPUMP, GPIO.LOW)       # press filter pump
     logging.debug('press relay 2')
-    GPIO.output(19, GPIO.LOW)       # press switch mode
+    GPIO.output(SMODE, GPIO.LOW)       # press switch mode
     logging.debug('press relay 3')
     time.sleep(3)                   # hold buttons down
-    GPIO.output(26, GPIO.HIGH)      # switch to wifi
+    GPIO.output(SCONN, GPIO.HIGH)      # switch to wifi
     logging.debug('switch relay 4 to wifi')
     time.sleep(2)                   # wait for reset
-    GPIO.output(13, GPIO.HIGH)      # release filter pump
+    GPIO.output(FPUMP, GPIO.HIGH)      # release filter pump
     logging.debug('release relay 2')
-    GPIO.output(19, GPIO.HIGH)      # release switch mode
+    GPIO.output(SMODE, GPIO.HIGH)      # release switch mode
     logging.debug('release relay 3')
     sys.exit()
 
 # 'Presses' once on the filter pump button
 def pressFilterPump():
     '''Send brief LOW signal to GPIO13 (filter pump)'''
-    GPIO.output(13, GPIO.LOW)       # press filter pump
+    GPIO.output(FPUMP, GPIO.LOW)       # press filter pump
     logging.debug('press relay 2')
     time.sleep(0.25)                   # hold briefly
     logging.debug('wait')
-    GPIO.output(13, GPIO.HIGH)      # release filter pump
+    GPIO.output(FPUMP, GPIO.HIGH)      # release filter pump
     logging.debug('release relay 2')
     sys.exit()
 
 # 'Presses' once on the Bluetooth button
 def pressProvision():
-    '''Send brief LOW signal to GPIO22 (provision)'''
-    GPIO.output(22, GPIO.LOW)       # press Bluetooth
+    '''Send brief LOW signal to GPIO6 (provision)'''
+    GPIO.output(PROV, GPIO.LOW)       # press Bluetooth
     logging.debug('press relay 1')
     time.sleep(0.25)                   # hold briefly
     logging.debug('wait')
-    GPIO.output(22, GPIO.HIGH)      # release Bluetooth
+    GPIO.output(PROV, GPIO.HIGH)      # release Bluetooth
     logging.debug('release relay 1')
     sys.exit()
 
 # 'Presses' once on the switch mode button
 def pressSwitchMode():
     '''Send brief LOW signal to GPIO19 (switch mode)'''
-    GPIO.output(19, GPIO.LOW)       # press switch mode
+    GPIO.output(SMODE, GPIO.LOW)       # press switch mode
     logging.debug('press relay 3')
     time.sleep(0.25)                   # hold briefly
     logging.debug('wait')
-    GPIO.output(19, GPIO.HIGH)      # release switch mode
+    GPIO.output(SMODE, GPIO.HIGH)      # release switch mode
     logging.debug('release relay 3')
     sys.exit()
 
 # 'Switches' TCX to wifi mode
 def switchWifi():
     '''Output HIGH (default) signal to GPIO26 (switch) to activate wifi mode'''
-    GPIO.output(26, GPIO.HIGH)
+    GPIO.output(SCONN, GPIO.HIGH)
     logging.debug('switch relay 4 high')
 
 # 'Switches' TCX to wired mode
 def switchWired():
     '''Output LOW signal to GPIO26 (switch) to activate wired mode'''
-    GPIO.output(26, GPIO.LOW)
+    GPIO.output(SCONN, GPIO.LOW)
     logging.debug('switch relay 4 low')
 
 # Called when action message received
@@ -243,7 +245,7 @@ def changeTemperature(sensor, val):
         bus.write_i2c_block_data(0x2c, 0x01, [val])
         logging.debug(f'send {val} to 0x2c channel 2')
     elif sensor == 'solar':
-        bus.write_i2c_block_data(0x2c, 0x03, [val])
+        bus.write_i2c_block_data(0x2c, 0x02, [val])
         logging.debug(f'send {val} to 0x2c channel 4')
 
 # Callback when the action topic receives a message
