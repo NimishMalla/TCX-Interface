@@ -22,12 +22,14 @@ def doTempAction(sensor, val):
 
     
 def failure(type, action):
+    # Called when invalid input is given
     if type == 'ne':
         return {'statusCode': 200,'body': json.dumps(f"ERROR: Non-existing Command: {action}")}
     else:
         return {'statusCode': 200,'body': json.dumps("ERROR: Incorrect Format")}
     
 def existing(action, cl):
+    # Called when any existing action is requested
     if action == 'quit':
         doAction(action)
         return {'statusCode': 200,'body': json.dumps("Sent command: Quitting program")}
