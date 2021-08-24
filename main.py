@@ -3,7 +3,7 @@ import json
 from awscrt import io, mqtt, auth, http
 from awsiot import mqtt_connection_builder
 import sys
-from os import _exit
+from os import _exit, getcwd, path
 import threading
 import RPi.GPIO as GPIO
 import time
@@ -14,7 +14,7 @@ import smbus
 import configparser
 
 cfp = configparser.ConfigParser()
-cfp.read('/home/pi/Desktop/TCX1/config.ini')
+cfp.read(path.join(getcwd(), 'config.ini')
 cfd = {}
 for k,v in cfp.items('Config'):
     cfd[k] = v
