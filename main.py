@@ -252,7 +252,7 @@ def changeTemperature(sensor, val):
         logging.debug(f'send {val} to 0x2c channel 2')
     elif sensor == 'solar':
         bus.write_i2c_block_data(0x2c, 0x02, [val])
-        logging.debug(f'send {val} to 0x2c channel 4')
+        logging.debug(f'send {val} to 0x2c channel 3')
 
 # Callback when the action topic receives a message
 def on_action_received(topic, payload, dup, qos, retain, **kwargs):
